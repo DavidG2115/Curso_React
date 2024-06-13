@@ -7,9 +7,17 @@ import { checkWinnerFrom, chechEndGame } from './logic/board'
 import { WinnerModal } from './components/WinnerModal'
 
 function App() {
-  const [board, setBoard] = useState(Array(9).fill(null))
+  const [board, setBoard] = useState(() => {
+    const boardFromStorage = window.localStorage.getItem('board')
+    if (boardFromStorage) return JSON.parse(boardFromStorage)
+    return Array(9).fill(null)
+  })
 
-  const [turn, setTurn] = useState(TURNS.X)
+  const [turn, setTurn] = useState(() => {
+    const turnFromStorage = window.localStorage.getItem('turn')
+    return turnFromStorage ?? TURNS.X
+  
+  })
 
   const [winner, setWinner] = useState(null)
 
@@ -17,9 +25,11 @@ function App() {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
-  }
 
-  
+    // Limpiar partida del local storage
+    window.localStorage.removeItem('board')
+    window.localStorage.removeItem('turn')
+  }
 
   const updateBoard = (index) => {
 
@@ -32,6 +42,9 @@ function App() {
     // Cambiar el turno 
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
+    // Guardar partida
+    window.localStorage.setItem('board', JSON.stringify(newBoard))
+    window.localStorage.setItem('turn', newTurn)
     // Verificar si hay un ganador
     const newWinner = checkWinnerFrom(newBoard)
     if (newWinner) {
@@ -70,6 +83,12 @@ function App() {
         <Square isSelected={turn === TURNS.O}>
           {TURNS.O}
         </Square>
+      </section>
+
+      <section>
+        <button onClick={resetGame} className='reset'>
+          Reset Game
+        </button>
       </section>
 
         <WinnerModal winner={winner} resetGame={resetGame} />

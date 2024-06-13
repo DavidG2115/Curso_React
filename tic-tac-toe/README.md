@@ -1,8 +1,13 @@
-# React + Vite
+# Tic Tac Toe con React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Instalación
+### Requisitos Previos
+- Node.js
+- npm o yarn
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Pasos
+```bash
+git clone https://github.com/tu_usuario/tic-tac-toe.git
+cd tic-tac-toe
+npm install
+npm run dev
